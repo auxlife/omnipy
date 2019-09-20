@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 sudo touch /boot/ssh
 
-useradd pi
+echo "pi:x:11669:11669::/home/pi:/bin/bash" >>/etc/passwd
+echo "pi:x:11669" >>/etc/group
+
 echo "pi:omnipy" | chpasswd
 mkdir /home/pi/
 
@@ -49,7 +51,7 @@ cp /home/pi/omnipy/scripts/recovery.key /home/pi/omnipy/data/key
 sudo cp /home/pi/omnipy/scripts/omnipy.service /etc/systemd/system/
 sudo cp /home/pi/omnipy/scripts/omnipy-beacon.service /etc/systemd/system/
 sudo cp /home/pi/omnipy/scripts/omnipy-pan.service /etc/systemd/system/
-
+sudo chown -R pi:pi /home/pi/*
 sudo systemctl enable omnipy.service
 sudo systemctl enable omnipy-beacon.service
 sudo systemctl enable omnipy-pan.service

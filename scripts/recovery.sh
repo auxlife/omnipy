@@ -2,14 +2,10 @@
 #FW_UPDATE_FILE=/boot/omnipy-fwupdate
 PW_RESET_FILE=/boot/omnipy-pwreset
 BT_RESET_FILE=/boot/omnipy-btreset
-EXPAND_FS=/boot/omnipy-expandfs
+
 WLAN_INTERFACE=wlan0
 
-if [[ -f ${EXPAND_FS} ]]; then
-    /bin/rm ${EXPAND_FS}
-    raspi-config --expand-rootfs
-    shutdown -r now
-fi
+
 
 #if [[ -f ${FW_UPDATE_FILE} ]]; then
 #    /bin/rm ${FW_UPDATE_FILE}

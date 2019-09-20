@@ -1,3 +1,5 @@
+This fork is to adapt the omnipy scipts to run on an intel edison/medtronic explorer board.
+
 # What is omnipy?
 
 ![rileylink android raspberrypi](https://github.com/winemug/omnipy/raw/master/img/droidrlpi.jpg)

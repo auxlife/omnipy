@@ -2,7 +2,7 @@
 sudo touch /boot/ssh
 
 useradd pi
-echo "omnipy" | passwd --stdin pi
+echo "pi:omnipy" | chpasswd
 #sudo raspi-config
 echo "omnipy" > /etc/hostname
 # hostname: omnipy

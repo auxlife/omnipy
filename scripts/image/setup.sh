@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 sudo touch /boot/ssh
 
-sudo passwd pi
-sudo raspi-config
-
+useradd pi
+echo "omnipy" | passwd --stdin pi
+#sudo raspi-config
+echo "omnipy" > /etc/hostname
 # hostname: omnipy
 # adv, memory split, 16
 # enable predictive intf names
@@ -12,11 +13,13 @@ sudo raspi-config
 
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y screen git python3 python3-pip vim jq bluez-tools libglib2.0-dev python3-rpi.gpio
+sudo apt install -y screen git python3 python3-pip vim jq bluez-tools libglib2.0-dev
 #expect build-essential libglib2.0-dev libdbus-1-dev libudev-dev libical-dev libreadline-dev rpi-update
 #reboot
 
+dpkg-reconfigure tzdata
 
+cd /home/pi/
 # sudo apt install -y hostapd dnsmasq
 # sudo systemctl disable hostapd
 # sudo systemctl unmask hostapd
@@ -31,15 +34,13 @@ sudo apt install -y screen git python3 python3-pip vim jq bluez-tools libglib2.0
 # sudo cp /home/pi/omnipy/scripts/image/hostapd.conf /etc/hostapd/
 # sudo cp /home/pi/omnipy/scripts/image/dnsmasq.conf /etc/dnsmasq.d/
 # sudo cp /home/pi/omnipy/scripts/image/dhcpcd.conf /etc/
-sudo cp /home/pi/omnipy/scripts/image/rc.local /etc/
 
-git config --global user.email "omnipy@balya.net"
-git config --global user.name "Omnipy Setup"
-git clone https://github.com/winemug/omnipy.git
+
+git clone https://github.com/auxlife/omnipy.git
 #switch to dev
 git clone https://github.com/winemug/bluepy.git
 
-
+sudo cp /home/pi/omnipy/scripts/image/rc.local /etc/
 #sudo /bin/rm /boot/.firmware_revision
 #sudo cp /home/pi/omnipy/scripts/image/rpiupdate.sh /usr/bin/rpiupdate
 #sudo git clone https://github.com/Hexxeh/rpi-firmware.git /root/.rpi-firmware
@@ -105,24 +106,3 @@ sudo touch /boot/omnipy-pwreset
 sudo touch /boot/omnipy-expandfs
 sudo touch /boot/omnipy-btreset
 sudo touch /boot/omnipy-hotspot
-
-rm /etc/wpa_supplicant/wpa_supplicant.conf
-rm /home/pi/.bash_history
-#wpa?
-sudo halt
-
-######
-
-sudo umount /dev/sdh1
-sudo umount /dev/sdh2
-sudo gparted /dev/sdh
-#shrink with /g/parted 3192MiB
-sudo mount /dev/sdh2 /mnt/piroot/
-sudo dcfldd if=/dev/zero of=/mnt/piroot/zero.txt
-sudo rm /mnt/piroot/zero.txt
-sudo sync
-sudo umount /dev/sdh2
-sudo sync
-
-sudo dcfldd if=/dev/sdh of=omnipy.img bs=512 count=6635520
-zip -9 omnipy.zip omnipy.img

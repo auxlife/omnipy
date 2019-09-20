@@ -3,7 +3,7 @@ sudo touch /boot/ssh
 
 echo "pi:x:11669:11669::/home/pi:/bin/bash" >>/etc/passwd
 echo "pi:x:11669" >>/etc/group
-
+echo "pi ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
 echo "pi:omnipy" | chpasswd
 mkdir /home/pi/
 
